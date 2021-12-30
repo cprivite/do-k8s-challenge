@@ -1,0 +1,49 @@
+apiVersion: kubernetes.crossplane.io/v1alpha1
+kind: Object
+metadata:
+  name: nginx-namespace
+spec:
+  forProvider:
+    manifest:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        # name in manifest is optional and defaults to Object name
+        # name: some-other-name
+        labels:
+          example: "true"
+  providerConfigRef:
+    name: kubernetes-provider
+---
+apiVersion: kubernetes.crossplane.io/v1alpha1
+kind: Object
+metadata:
+  name: nginx-deployment
+spec:
+  forProvider:
+    manifest:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        # name in manifest is optional and defaults to Object name
+        # name: some-other-name
+        namespace: nginx-namespace
+        labels:
+          app: nginx
+      spec:
+        selector:
+          matchLabels:
+            app: nginx
+        replicas: 2 # tells deployment to run 2 pods matching the template
+        template:
+          metadata:
+            labels:
+              app: nginx
+          spec:
+            containers:
+            - name: nginx
+              image: nginx:latest
+              ports:
+              - containerPort: 80
+  providerConfigRef:
+    name: kubernetes-provider
