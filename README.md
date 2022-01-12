@@ -10,7 +10,14 @@ To start though, we need a kubernetes cluster to install crossplane into, a plac
 
 1. Head to https://cloud.digitalocean.com/kubernetes/clusters and click Create a Kubernetes Cluster. 
    * You'll need to pick a region, K8S version, and a name, we're just going to go with the defaults here for everything, and two of the smallest nodes (to conserve credits), in production you'd likely want a full 3 node HA control plane and a backup/restore strategy for your crossplane cluster.
+   * Here's what I did:
+     ![image](https://user-images.githubusercontent.com/23177737/149045832-c24d55a7-d951-4113-bc96-a8d6543e1c1b.png)
+     ![image](https://user-images.githubusercontent.com/23177737/149045929-c66184d4-9ec0-451a-a2da-258872375fa2.png)
+     ![image](https://user-images.githubusercontent.com/23177737/149045953-8aadb9cb-543b-44c6-818a-a2de69b02bef.png)
+
 2. Next we download the kubeconfig (Download Config) from the cluster page in the digital ocean panel. 
+   ![image](https://user-images.githubusercontent.com/23177737/149046046-9c4da285-5aa9-4197-84ac-951cae8b234a.png)
+
 3. We use helm to install crossplane into our cluster.
       ```
       kubectl create namespace crossplane-system
